@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup Page</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .container img {
+            width: 250px;
+            height: 250px;
+            float: right;
+            margin-left: 20px;
+        }
+        .container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .container input, .container select, .container button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container button {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        .container button:hover {
+            opacity: 0.9;
+        }
+    </style>
+    <script>
+        function toggleFields() {
+            var userType = document.getElementById("usertype").value;
+            if (userType === "Customer") {
+                document.getElementById("meterNo").style.display = "block";
+                document.getElementById("meterText").style.display = "block";
+                document.getElementById("employerID").style.display = "none";
+                document.getElementById("employerText").style.display = "none";
+                document.getElementById("name").style.display = "block";
+                document.getElementById("nameText").readOnly = true;
+            } else {
+                document.getElementById("meterNo").style.display = "none";
+                document.getElementById("meterText").style.display = "none";
+                document.getElementById("employerID").style.display = "block";
+                document.getElementById("employerText").style.display = "block";
+                document.getElementById("name").style.display = "block";
+                document.getElementById("nameText").readOnly = false;
+            }
+        }
+
+        function fetchCustomerName() {
+            var meterNo = document.getElementById("meterText").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "fetch_customer_name.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("nameText").value = xhr.responseText;
+                }
+            };
+            xhr.send("meter_no=" + meterNo);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form action="signup.php" method="post">
+           
+            
+           
+           
+            <label for="usernameText">Username</label>
+            <input id="usernameText" type="text" name="usernameText" required>
+            
+            
+            <label for="passwordText">Password</label>
+            <input id="passwordText" type="password" name="passwordText" required>
+            <button type="submit" name="create">Create</button>
+            <button type="button" onclick="window.location.href='login.html'">Back</button>
+        </form>
+        
+    </div>
+</body>
+</html>
